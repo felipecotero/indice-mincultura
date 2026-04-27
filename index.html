@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Índice de Páginas Web — Ministerio de las Culturas</title>
+    <meta name="description" content="Directorio de todas las páginas web activas del Ministerio de las Culturas, las Artes y los Saberes. Mapas interactivos, infografías, dashboards y más.">
+    <meta property="og:title" content="Índice de Páginas Web — Ministerio de las Culturas">
+    <meta property="og:description" content="Directorio de páginas web activas del Ministerio de las Culturas.">
+    <meta property="og:type" content="website">
+    <meta name="theme-color" content="#1a0a2e">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --bg-deep: #0a0a14;
+            --bg-card: rgba(255,255,255,0.04);
+            --bg-card-hover: rgba(255,255,255,0.08);
+            --accent-purple: #8b5cf6;
+            --accent-fucsia: #d946ef;
+            --accent-blue: #3b82f6;
+            --accent-green: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --border: rgba(255,255,255,0.06);
+            --glow-purple: rgba(139,92,246,0.15);
+            --radius: 16px;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg-deep);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Ambient background */
+        .ambient-bg {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background:
+                radial-gradient(ellipse 80% 50% at 50% -20%, rgba(139,92,246,0.12), transparent),
+                radial-gradient(ellipse 60% 40% at 80% 50%, rgba(217,70,239,0.06), transparent),
+                radial-gradient(ellipse 60% 40% at 20% 80%, rgba(59,130,246,0.06), transparent);
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+        /* Header */
+        .header {
+            padding: 48px 0 32px;
+            text-align: center;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 40px;
+        }
+        .header-logos {
+            display: flex; align-items: center; justify-content: center; gap: 24px;
+            margin-bottom: 32px; flex-wrap: wrap;
+        }
+        .header-logos img { height: 56px; width: auto; filter: brightness(0) invert(1); opacity: 0.85; }
+        .header-logos .divider { width: 1px; height: 40px; background: rgba(255,255,255,0.15); }
+        .header h1 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.8rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(135deg, var(--text-primary) 0%, var(--accent-purple) 50%, var(--accent-fucsia) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+        }
+        .header p { color: var(--text-secondary); font-size: 1rem; max-width: 600px; margin: 0 auto; }
+        .header .badge-count {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: var(--bg-card); border: 1px solid var(--border);
+            padding: 8px 20px; border-radius: 100px; font-size: 0.85rem;
+            color: var(--text-secondary); margin-top: 20px;
+        }
+        .badge-count .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--accent-green); animation: pulse-dot 2s infinite; }
+        @keyframes pulse-dot { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+        /* Filters */
+        .filters {
+            display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
+            margin-bottom: 40px; padding: 0 12px;
+        }
+        .filter-btn {
+            padding: 8px 20px; border-radius: 100px; border: 1px solid var(--border);
+            background: transparent; color: var(--text-secondary); font-size: 0.82rem;
+            font-weight: 600; cursor: pointer; transition: all 0.25s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .filter-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); border-color: rgba(255,255,255,0.12); }
+        .filter-btn.active {
+            background: var(--accent-purple); color: white; border-color: var(--accent-purple);
+            box-shadow: 0 0 20px var(--glow-purple);
+        }
+
+        /* Section titles */
+        .section-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.1rem; font-weight: 700;
+            color: var(--text-muted); text-transform: uppercase;
+            letter-spacing: 0.1em; margin-bottom: 20px;
+            padding-left: 4px;
+            display: flex; align-items: center; gap: 12px;
+        }
+        .section-title::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+        .section-group { margin-bottom: 48px; }
+
+        /* Cards grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 16px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 24px;
+            text-decoration: none; color: inherit;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; flex-direction: column; gap: 12px;
+            position: relative; overflow: hidden;
+        }
+        .card::before {
+            content: ''; position: absolute; inset: 0;
+            background: linear-gradient(135deg, var(--card-accent, var(--accent-purple)) 0%, transparent 60%);
+            opacity: 0; transition: opacity 0.3s ease;
+            pointer-events: none;
+        }
+        .card:hover {
+            border-color: rgba(255,255,255,0.12);
+            background: var(--bg-card-hover);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px rgba(0,0,0,0.3), 0 0 30px var(--glow-purple);
+        }
+        .card:hover::before { opacity: 0.06; }
+
+        .card-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+        .card-badge {
+            font-size: 0.68rem; font-weight: 700; text-transform: uppercase;
+            letter-spacing: 0.08em; padding: 4px 12px; border-radius: 100px;
+            background: rgba(139,92,246,0.15); color: var(--accent-purple);
+            white-space: nowrap; flex-shrink: 0;
+        }
+        .card-badge.mapa { background: rgba(59,130,246,0.15); color: var(--accent-blue); }
+        .card-badge.infografia { background: rgba(217,70,239,0.15); color: var(--accent-fucsia); }
+        .card-badge.dashboard { background: rgba(16,185,129,0.15); color: var(--accent-green); }
+        .card-badge.landing { background: rgba(245,158,11,0.15); color: var(--accent-amber); }
+        .card-badge.directorio { background: rgba(244,63,94,0.15); color: var(--accent-rose); }
+        .card-badge.cronograma { background: rgba(244,63,94,0.12); color: #fb7185; }
+
+        .card-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            background: var(--bg-card-hover); display: flex;
+            align-items: center; justify-content: center; font-size: 1.2rem;
+            flex-shrink: 0;
+        }
+
+        .card-title {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 1.05rem; font-weight: 700;
+            line-height: 1.3; color: var(--text-primary);
+        }
+        .card-desc { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.5; }
+
+        .card-footer {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-top: auto; padding-top: 12px; border-top: 1px solid var(--border);
+        }
+        .card-repo {
+            font-size: 0.72rem; color: var(--text-muted);
+            font-family: 'SF Mono', 'Fira Code', monospace;
+            max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+        }
+        .card-arrow {
+            width: 28px; height: 28px; border-radius: 50%;
+            background: rgba(255,255,255,0.05); display: flex;
+            align-items: center; justify-content: center;
+            transition: all 0.25s; color: var(--text-muted); font-size: 0.85rem;
+        }
+        .card:hover .card-arrow { background: var(--accent-purple); color: white; transform: translateX(2px); }
+
+        /* Footer */
+        .footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 0; text-align: center;
+            margin-top: 40px;
+        }
+        .footer-logos { display: flex; align-items: center; justify-content: center; gap: 32px; margin-bottom: 16px; flex-wrap: wrap; }
+        .footer-logos img { height: 36px; width: auto; opacity: 0.4; filter: brightness(0) invert(1); }
+        .footer p { color: var(--text-muted); font-size: 0.78rem; }
+
+        /* Responsive */
+        @media (max-width: 640px) {
+            .cards-grid { grid-template-columns: 1fr; }
+            .header { padding: 32px 0 24px; }
+            .header-logos img { height: 40px; }
+            .container { padding: 0 16px; }
+        }
+
+        /* Entrance animation */
+        .card { opacity: 0; transform: translateY(20px); animation: card-in 0.5s ease forwards; }
+        @keyframes card-in { to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+    <div class="ambient-bg"></div>
+
+    <div class="container">
+        <header class="header" id="top">
+            <div class="header-logos">
+                <img src="assets/logo_culturas_blanco.png" alt="Ministerio de las Culturas, las Artes y los Saberes">
+                <div class="divider"></div>
+                <img src="assets/logo_govcol.png" alt="Gobierno de Colombia">
+            </div>
+            <h1>Índice de Páginas Web</h1>
+            <p>Directorio de todas las páginas web activas del Ministerio de las Culturas, las Artes y los Saberes</p>
+            <div class="badge-count">
+                <span class="dot"></span>
+                <span id="total-count">16 páginas al aire</span>
+            </div>
+        </header>
+
+        <nav class="filters" id="filters">
+            <button class="filter-btn active" data-filter="all">Todas</button>
+            <button class="filter-btn" data-filter="mapa">🗺️ Mapas</button>
+            <button class="filter-btn" data-filter="infografia">📊 Infografías</button>
+            <button class="filter-btn" data-filter="dashboard">📈 Dashboards</button>
+            <button class="filter-btn" data-filter="landing">🎪 Eventos</button>
+            <button class="filter-btn" data-filter="directorio">📋 Directorios</button>
+            <button class="filter-btn" data-filter="cronograma">📅 Cronogramas</button>
+        </nav>
+
+        <main id="main-content"></main>
+
+        <footer class="footer">
+            <div class="footer-logos">
+                <img src="assets/logo_culturas_blanco.png" alt="Ministerio de las Culturas">
+                <img src="assets/logo_aplp.png" alt="Artes para la Paz">
+            </div>
+            <p>Ministerio de las Culturas, las Artes y los Saberes — Colombia 2025–2026</p>
+        </footer>
+    </div>
+
+    <script>
+        const pages = [
+            // ─── ARTES PARA LA PAZ ───
+            {
+                section: "Artes para la Paz",
+                title: "Ciclo de Talleres: Potenciar Voces para Visibilizar Acciones",
+                desc: "Landing page principal del programa Artes para la Paz. Información sobre el ciclo de talleres de fortalecimiento para redes culturales comunitarias.",
+                url: "https://felipecotero.github.io/ARTESPARALAPAZ/",
+                repo: "ARTESPARALAPAZ",
+                type: "landing",
+                icon: "🎨"
+            },
+            {
+                section: "Artes para la Paz",
+                title: "Mapa Redes Culturales — Artes para la Paz",
+                desc: "Mapa interactivo general de todas las redes culturales del programa. Visualización geográfica de organizaciones en todo el territorio nacional.",
+                url: "https://felipecotero.github.io/ARTESPARALAPAZ/mapaaplp/",
+                repo: "ARTESPARALAPAZ/mapaaplp",
+                type: "mapa",
+                icon: "🗺️"
+            },
+            {
+                section: "Artes para la Paz",
+                title: "Mapa Red Comunitaria de Hip Hop",
+                desc: "Mapa interactivo de las 16 organizaciones de la Red Comunitaria de Hip Hop. Eventos, actividades y territorios de cada organización.",
+                url: "https://felipecotero.github.io/ARTESPARALAPAZ/mapahiphop/",
+                repo: "ARTESPARALAPAZ/mapahiphop",
+                type: "mapa",
+                icon: "🎤"
+            },
+            {
+                section: "Artes para la Paz",
+                title: "Mapa Red de Mujeres Artistas, Sabedoras y Gestoras",
+                desc: "Mapa interactivo de las 16 organizaciones de la Red de Mujeres. Visualización de proyectos, eventos y territorios de la red.",
+                url: "https://felipecotero.github.io/ARTESPARALAPAZ/mapamujeres/",
+                repo: "ARTESPARALAPAZ/mapamujeres",
+                type: "mapa",
+                icon: "🌺"
+            },
+            {
+                section: "Artes para la Paz",
+                title: "Mapa Encuentro de Redes — Suroccidente",
+                desc: "Mapa interactivo del Encuentro de Redes en la región suroccidente de Colombia.",
+                url: "https://felipecotero.github.io/ARTESPARALAPAZ/mapasuroccidente/",
+                repo: "ARTESPARALAPAZ/mapasuroccidente",
+                type: "mapa",
+                icon: "🌄"
+            },
+            {
+                section: "Artes para la Paz",
+                title: "Mapa Redes Culturales — Vista General",
+                desc: "Vista general consolidada de todas las redes culturales del programa Artes para la Paz en Colombia.",
+                url: "https://felipecotero.github.io/ARTESPARALAPAZ/maparedes.html",
+                repo: "ARTESPARALAPAZ/maparedes",
+                type: "mapa",
+                icon: "📍"
+            },
+            {
+                section: "Artes para la Paz",
+                title: "Mapa Redes Culturales — Económico",
+                desc: "Visualización del componente económico de las redes culturales del programa.",
+                url: "https://felipecotero.github.io/ARTESPARALAPAZ/ECONOMINCO/",
+                repo: "ARTESPARALAPAZ/ECONOMINCO",
+                type: "mapa",
+                icon: "💰"
+            },
+            {
+                section: "Artes para la Paz",
+                title: "Plan de Movilidad Creativa — Santa Marta (CELAC)",
+                desc: "Página informativa del Plan de Movilidad Creativa en Santa Marta, en el marco de la CELAC.",
+                url: "https://felipecotero.github.io/ARTESPARALAPAZ/CELAC/",
+                repo: "ARTESPARALAPAZ/CELAC",
+                type: "landing",
+                icon: "✈️"
+            },
+            // ─── INFOGRAFÍAS Y REPORTES ───
+            {
+                section: "Infografías y Reportes",
+                title: "Infografías Artes para la Paz — Ley 630",
+                desc: "Infografías interactivas sobre la Ley 630 de Cultura y el programa Artes para la Paz.",
+                url: "https://felipecotero.github.io/INFOGRAFIAS-LEY-DE-CULTURA/",
+                repo: "INFOGRAFIAS-LEY-DE-CULTURA",
+                type: "infografia",
+                icon: "📊"
+            },
+            {
+                section: "Infografías y Reportes",
+                title: "Infografías Cultura de Paz",
+                desc: "Infografías del componente Cultura de Paz del programa.",
+                url: "https://felipecotero.github.io/INFOGRAFIAS-LEY-DE-CULTURA/CDP/",
+                repo: "INFOGRAFIAS-LEY-DE-CULTURA/CDP",
+                type: "infografia",
+                icon: "🕊️"
+            },
+            {
+                section: "Infografías y Reportes",
+                title: "Informe Final — Convenio 1022-2025",
+                desc: "Dashboard del informe final de Fortalecimiento del Ecosistema Cultural y Comunitario, Convenio 1022-2025. Cifras, estadísticas y resultados.",
+                url: "https://felipecotero.github.io/INFOGRAFIAS-LEY-DE-CULTURA/INFORME_FINAL/",
+                repo: "INFOGRAFIAS-LEY-DE-CULTURA/INFORME_FINAL",
+                type: "dashboard",
+                icon: "📋"
+            },
+            {
+                section: "Infografías y Reportes",
+                title: "Infografías Red Suroccidente",
+                desc: "Infografías específicas de la Red del Suroccidente colombiano.",
+                url: "https://felipecotero.github.io/INFOGRAFIAS-LEY-DE-CULTURA/REDSUROCCIDENTE/",
+                repo: "INFOGRAFIAS-LEY-DE-CULTURA/REDSUROCCIDENTE",
+                type: "infografia",
+                icon: "🏔️"
+            },
+            // ─── RED INTERCULTURAL JUVENIL ───
+            {
+                section: "Red Intercultural Juvenil",
+                title: "Cronograma Cultura es Dignidad Mayor",
+                desc: "Cronograma territorial interactivo de la estrategia Cultura es Dignidad Mayor. Filtros por encargado, puntos de recogida y rutas.",
+                url: "https://felipecotero.github.io/red-intercultural-juvenil/",
+                repo: "red-intercultural-juvenil",
+                type: "cronograma",
+                icon: "📅"
+            },
+            {
+                section: "Red Intercultural Juvenil",
+                title: "Directorio Vivo — Red Intercultural Juvenil",
+                desc: "Directorio interactivo de la Red Intercultural Juvenil de Colombia. Catálogo de organizaciones con información de contacto y ubicación.",
+                url: "https://redinterculturaljuvenilcol.github.io/directorio_vivo_rij/",
+                repo: "directorio_vivo_rij",
+                type: "directorio",
+                icon: "📒"
+            },
+            // ─── CULTURA VIVA COMUNITARIA ───
+            {
+                section: "Cultura Viva Comunitaria",
+                title: "VII Congreso Cultura Viva Comunitaria — Todas las Voces 2026",
+                desc: "Landing page del Séptimo Congreso de Cultura Viva Comunitaria de Colombia. Información del evento, programación y convocatoria.",
+                url: "https://felipecotero.github.io/septimo-congreso-cultura-viva-comunitaria-colombia-todas-las-voces-2026/",
+                repo: "septimo-congreso-...",
+                type: "landing",
+                icon: "🎭"
+            },
+            // ─── DASHBOARDS ───
+            {
+                section: "Dashboards",
+                title: "RED COMUNITARIA DE HIP HOP — Dashboard 2025",
+                desc: "Dashboard estadístico de la Red Comunitaria de Hip Hop. Visualización de datos, métricas y cifras del programa.",
+                url: "https://felipecotero.github.io/dashboard-hip-hop/",
+                repo: "dashboard-hip-hop",
+                type: "dashboard",
+                icon: "📈"
+            }
+        ];
+
+        // ─── Render ───
+        function render(filter = 'all') {
+            const main = document.getElementById('main-content');
+            main.innerHTML = '';
+
+            const filtered = filter === 'all' ? pages : pages.filter(p => p.type === filter);
+            const sections = {};
+            filtered.forEach(p => {
+                if (!sections[p.section]) sections[p.section] = [];
+                sections[p.section].push(p);
+            });
+
+            let delay = 0;
+            for (const [sectionName, items] of Object.entries(sections)) {
+                const group = document.createElement('div');
+                group.className = 'section-group';
+                group.innerHTML = `<h2 class="section-title">${sectionName}</h2>`;
+
+                const grid = document.createElement('div');
+                grid.className = 'cards-grid';
+
+                items.forEach(page => {
+                    const card = document.createElement('a');
+                    card.href = page.url;
+                    card.target = '_blank';
+                    card.rel = 'noopener noreferrer';
+                    card.className = 'card';
+                    card.style.animationDelay = `${delay * 60}ms`;
+                    delay++;
+
+                    card.innerHTML = `
+                        <div class="card-top">
+                            <div class="card-icon">${page.icon}</div>
+                            <span class="card-badge ${page.type}">${page.type}</span>
+                        </div>
+                        <h3 class="card-title">${page.title}</h3>
+                        <p class="card-desc">${page.desc}</p>
+                        <div class="card-footer">
+                            <span class="card-repo">${page.repo}</span>
+                            <span class="card-arrow">→</span>
+                        </div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                group.appendChild(grid);
+                main.appendChild(group);
+            }
+
+            // Update count
+            document.getElementById('total-count').textContent = `${filtered.length} página${filtered.length !== 1 ? 's' : ''} al aire`;
+        }
+
+        // ─── Filters ───
+        document.getElementById('filters').addEventListener('click', e => {
+            if (!e.target.classList.contains('filter-btn')) return;
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            e.target.classList.add('active');
+            render(e.target.dataset.filter);
+        });
+
+        render();
+    </script>
+</body>
+</html>
